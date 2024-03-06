@@ -16,6 +16,8 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 using System.Diagnostics;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SurfaceAutomation
 {
@@ -216,13 +218,24 @@ namespace SurfaceAutomation
         {
             clsResolution.CResolution rs = new clsResolution.CResolution(screenWidth, screenHeight);
         }
-
+        
+        public async void makeUTFBom()
+        {
+            string text = System.IO.File.ReadAllText(@"C:\\Users\\Balapraveen\\Desktop\\chinese1 - Copy.txt");
+            byte[] encodedText = new byte[] { 0xEF, 0xBB, 0xBF }.Concat(Encoding.UTF8.GetBytes(text)).ToArray();
+            using (FileStream sourceStream = new FileStream(@"C:\\Users\\Balapraveen\\Desktop\\chinese1.csv",
+                FileMode.Create, FileAccess.Write, FileShare.None,
+                bufferSize: 4096, useAsync: true))
+            {
+                await sourceStream.WriteAsync(encodedText, 0, encodedText.Length);
+            };
+        }
         private void btnTxt2Csv_Click(object sender, EventArgs e)
         {
-            //ConvertToXlsx(@"", @"")
+            makeUTFBom();
         }
 
-        void ConvertToXlsx(string sourcefile, string destfile)
+        public void ConvertToXlsx(string sourcefile, string destfile)
         {
             int i, j;
             Msexcel.Application xlApp;
@@ -241,7 +254,7 @@ namespace SurfaceAutomation
                 for (j = 0; j < cells.Length; j++)
                     xlWorkSheet.Cells[i + 1, j + 1] = cells[j];
             }
-            xlWorkBook.SaveAs(destfile, Msexcel.XlFileFormat.xlWorkbookDefault, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            xlWorkBook.SaveAs(destfile, Msexcel.XlFileFormat.xlWorkbookDefault, misValue, misValue, misValue, misValue, Msexcel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
             xlWorkBook.Close(true, misValue, misValue);
             xlApp.Quit();
         }

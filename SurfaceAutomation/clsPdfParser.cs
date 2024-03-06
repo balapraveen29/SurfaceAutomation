@@ -116,7 +116,7 @@ namespace SurfaceAutomation
                         }
                         if(bracketDepth == 0 && CheckToken(new string[] {"ET"}, previousCharacters))
                         {
-                            intTextObject = false;
+                            //intTextObject = false;
                             resultString += " ";
                         }
                         else

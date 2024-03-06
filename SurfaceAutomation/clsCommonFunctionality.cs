@@ -8,6 +8,6 @@ namespace SurfaceAutomation
 {
     public class clsCommonFunctionality
     {
-        ,.̣
+      
     }
 }
