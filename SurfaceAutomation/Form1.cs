@@ -10,10 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Msword = Microsoft.Office.Interop.Word;
+using Msexcel = Microsoft.Office.Interop.Excel;
 using iTextSharp;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
+using System.Diagnostics;
 
 namespace SurfaceAutomation
 {
@@ -213,6 +215,35 @@ namespace SurfaceAutomation
         public void changeResolution(int screenWidth, int screenHeight)
         {
             clsResolution.CResolution rs = new clsResolution.CResolution(screenWidth, screenHeight);
+        }
+
+        private void btnTxt2Csv_Click(object sender, EventArgs e)
+        {
+            //ConvertToXlsx(@"", @"")
+        }
+
+        void ConvertToXlsx(string sourcefile, string destfile)
+        {
+            int i, j;
+            Msexcel.Application xlApp;
+            Msexcel.Workbook xlWorkBook;
+            Msexcel._Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+            string[] lines, cells;
+            lines = System.IO.File.ReadAllLines(sourcefile);
+            xlApp = new Msexcel.Application();
+            xlApp.DisplayAlerts = false;
+            xlWorkBook = xlApp.Workbooks.Add();
+            xlWorkSheet = (Msexcel._Worksheet)xlWorkBook.ActiveSheet;
+            for (i = 0; i < lines.Length; i++)
+            {
+                cells = lines[i].Split(new Char[] { '\t', ';' });
+                for (j = 0; j < cells.Length; j++)
+                    xlWorkSheet.Cells[i + 1, j + 1] = cells[j];
+            }
+            xlWorkBook.SaveAs(destfile, Msexcel.XlFileFormat.xlWorkbookDefault, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            xlWorkBook.Close(true, misValue, misValue);
+            xlApp.Quit();
         }
     }
 }

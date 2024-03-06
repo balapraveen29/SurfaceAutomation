@@ -30,6 +30,7 @@
         {
             this.btnActivateWindow = new System.Windows.Forms.Button();
             this.btnExcelCreated = new System.Windows.Forms.Button();
+            this.btnTxt2Csv = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnActivateWindow
@@ -52,11 +53,22 @@
             this.btnExcelCreated.UseVisualStyleBackColor = true;
             this.btnExcelCreated.Click += new System.EventHandler(this.btnExcelCreated_Click);
             // 
+            // btnTxt2Csv
+            // 
+            this.btnTxt2Csv.Location = new System.Drawing.Point(38, 166);
+            this.btnTxt2Csv.Name = "btnTxt2Csv";
+            this.btnTxt2Csv.Size = new System.Drawing.Size(75, 46);
+            this.btnTxt2Csv.TabIndex = 2;
+            this.btnTxt2Csv.Text = "Convert Text to CSV";
+            this.btnTxt2Csv.UseVisualStyleBackColor = true;
+            this.btnTxt2Csv.Click += new System.EventHandler(this.btnTxt2Csv_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnTxt2Csv);
             this.Controls.Add(this.btnExcelCreated);
             this.Controls.Add(this.btnActivateWindow);
             this.Name = "Form1";
@@ -70,6 +82,7 @@
 
         private System.Windows.Forms.Button btnActivateWindow;
         private System.Windows.Forms.Button btnExcelCreated;
+        private System.Windows.Forms.Button btnTxt2Csv;
     }
 }
 
